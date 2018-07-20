@@ -2,13 +2,42 @@ var clm = require('clmtrackr');
 
 export default function() {
 
+  var appDiv = document.getElementById('app-coin');
+
+  var tpl = `
+  <video
+    id="src-video"
+    autoplay
+    controls
+    style="border: 1px solid black;">
+  </video>
+
+  <canvas
+  id="dst-canvas"
+  style="width: 600px;height: 600px;border: 1px solid black;">
+  </canvas>
+
+  <fieldset>
+      <legend>Adjustments</legend>
+
+      <label for="brightness">Brightness</label>
+      <input type="range" id="brightness" name="brightness"
+             min="0" max="2" value="1" step=".001" />
+
+      <label for="contrast">Contrast</label>
+      <input type="range" id="contrast" name="contrast"
+             min="0" max="2.6" value="1.3" step=".001" />
+
+  </fieldset>
+  `;
+  appDiv.innerHTML = tpl;
+
+
   var videoDom = document.getElementById('src-video');
   var canvas = document.getElementById('dst-canvas');
   var ctx = canvas.getContext('2d');
 
   var ctracker = new clm.default.tracker();
-
-
 
   var scrVidDimensions = false;
   var srcCoordinates = false;
@@ -101,7 +130,7 @@ export default function() {
     testCanvas.width = scrVidDimensions.w;
     testCanvas.height = scrVidDimensions.h;
     testCanvas.style.border   = "1px solid black";
-    document.body.appendChild(testCanvas);
+    appDiv.appendChild(testCanvas);
     let testDraw = function() {
       testCtx.drawImage(
         videoDom,
